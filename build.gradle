@@ -27,6 +27,9 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok'
 
+	compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.2'
+
+
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
 
