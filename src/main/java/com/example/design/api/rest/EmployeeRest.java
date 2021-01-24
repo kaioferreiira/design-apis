@@ -2,6 +2,10 @@ package com.example.design.api.rest;
 
 import com.example.design.api.business.dto.EmployeeDTO;
 import com.example.design.api.business.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +52,16 @@ public class EmployeeRest implements EmployeeRestEndpoint {
     }
 
     @Override
-    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "This is to fetch All the Books stored in Db")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200",
+            description = "Fetched All the Books form Db",
+            content = {@Content(mediaType = "application/json")}),
+        @ApiResponse(responseCode = "404",
+            description = "NOt Available",
+            content = @Content)
+    })
+    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<EmployeeDTO>> buscaFuncionariosList() {
 
         ResponseEntity<List<EmployeeDTO>> response = ResponseEntity.ok(employeeService.buscaFuncionariosList());
