@@ -1,4 +1,4 @@
-package com.example.design.api.business.exception.exceptions;
+package com.example.design.app.business.exception.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
 

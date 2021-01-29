@@ -1,6 +1,6 @@
-package com.example.design.api.rest;
+package com.example.design.app.api;
 
-import com.example.design.api.business.dto.EmployeeDTO;
+import com.example.design.app.business.dto.EmployeeDTO;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 

@@ -1,4 +1,4 @@
-package com.example.design.api.business.exception;
+package com.example.design.app.business.exception;
 
 
 public abstract class EmployeeExceptionMessage {

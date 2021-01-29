@@ -1,7 +1,7 @@
-package com.example.design.api;
+package com.example.design.app;
 
-import com.example.design.api.business.dto.EmployeeDTO;
-import com.example.design.api.business.service.EmployeeServiceImpl;
+import com.example.design.app.business.dto.EmployeeDTO;
+import com.example.design.app.business.service.EmployeeServiceImpl;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -1,9 +1,9 @@
-package com.example.design.api.business.entity.converter;
+package com.example.design.app.business.entity.converter;
 
-import com.example.design.api.business.dto.EmployeeDTO;
-import com.example.design.api.business.entity.Employee;
-import com.example.design.api.business.exception.EmployeeExceptionMessage;
-import com.example.design.api.business.exception.exceptions.ValidationException;
+import com.example.design.app.business.dto.EmployeeDTO;
+import com.example.design.app.business.entity.Employee;
+import com.example.design.app.business.exception.EmployeeExceptionMessage;
+import com.example.design.app.business.exception.exceptions.ValidationException;
 import java.util.Objects;
 
 

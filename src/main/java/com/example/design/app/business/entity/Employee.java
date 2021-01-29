@@ -1,4 +1,4 @@
-package com.example.design.api.business.entity;
+package com.example.design.app.business.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

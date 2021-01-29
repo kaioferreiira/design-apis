@@ -1,7 +1,7 @@
-package com.example.design.api.rest;
+package com.example.design.app.api;
 
-import com.example.design.api.business.dto.EmployeeDTO;
-import com.example.design.api.business.service.EmployeeService;
+import com.example.design.app.business.dto.EmployeeDTO;
+import com.example.design.app.business.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

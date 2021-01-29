@@ -1,4 +1,4 @@
-package com.example.design.api.business.dto;
+package com.example.design.app.business.dto;
 
 
 import javax.validation.constraints.NotBlank;
