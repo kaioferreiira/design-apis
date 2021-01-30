@@ -21,15 +21,17 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
+    private String name;
     private String email;
-    private String celular;
-    private Integer idade;
+    private String cellphone;
+    private Integer age;
+    private String cpf;
 
-    public Employee(String nome, String email, String celular, Integer idade) {
-        this.nome = nome;
+    public Employee(String name, String email, String cellphone, Integer age, String cpf) {
+        this.name = name;
         this.email = email;
-        this.celular = celular;
-        this.idade = idade;
+        this.cellphone = cellphone;
+        this.age = age;
+        this.cpf = cpf;
     }
 }

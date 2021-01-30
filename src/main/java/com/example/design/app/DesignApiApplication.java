@@ -1,7 +1,7 @@
 package com.example.design.app;
 
 import com.example.design.app.business.dto.EmployeeDTO;
-import com.example.design.app.business.service.EmployeeServiceImpl;
+import com.example.design.app.business.business.EmployeeBusinessImpl;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +14,7 @@ public class DesignApiApplication  implements CommandLineRunner {
 
 
 	@Autowired
-	private EmployeeServiceImpl employeeService;
+	private EmployeeBusinessImpl employeeService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DesignApiApplication.class, args);
@@ -26,10 +26,10 @@ public class DesignApiApplication  implements CommandLineRunner {
 
 		EmployeeDTO employeeDTO = new EmployeeDTO()
 				.builder()
-				.nome("Kaio Ferreira")
+				.name("Kaio Ferreira")
 				.email("employee.costa@teste.com.br")
-				.idade(27)
-				.celular("3242-8985")
+				.age(27)
+				.cellphone("3242-8985")
 				.build();
 
 		employeeService.adicionaFuncionario(employeeDTO);

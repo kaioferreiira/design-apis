@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 
 public interface EmployeeRestEndpoint {
 
-    ResponseEntity<List<EmployeeDTO>> buscaFuncionariosList();
+    ResponseEntity<List<EmployeeDTO>> findAllEmployees();
 
-    ResponseEntity<EmployeeDTO> buscaFuncionario(Long employeeId);
+    ResponseEntity<EmployeeDTO> findEmployee(Long employeeId);
 
-    ResponseEntity<Void> adicionaFuncionario(EmployeeDTO employeeDTO);
+    ResponseEntity<Void> addEmployee(EmployeeDTO employeeDTO);
 
-    ResponseEntity<Void> atualizaFuncionario(Long employeeId, EmployeeDTO employeeDTO);
+    ResponseEntity<Void> updateEmployee(Long employeeId, EmployeeDTO employeeDTO);
+
+    ResponseEntity<Void> updatePartiallyEmployee(Long employeeId, EmployeeDTO employeeDTO);
 
 }

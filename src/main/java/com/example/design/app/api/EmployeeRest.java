@@ -1,7 +1,7 @@
 package com.example.design.app.api;
 
 import com.example.design.app.business.dto.EmployeeDTO;
-import com.example.design.app.business.service.EmployeeService;
+import com.example.design.app.business.business.EmployeeBusiness;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,26 +28,25 @@ public class EmployeeRest implements EmployeeRestEndpoint {
 
     public static final String BASE_PATH = "/employees";
 
-    private EmployeeService employeeService;
+    private EmployeeBusiness employeeBusiness;
 
-    @Autowired
-    public EmployeeRest(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeRest(EmployeeBusiness employeeBusiness) {
+        this.employeeBusiness = employeeBusiness;
     }
 
     @Override
-    @PostMapping("/")
-    public ResponseEntity<Void> adicionaFuncionario(@Valid @RequestBody EmployeeDTO employeeDTO) {
+    @PostMapping(path ="/")
+    public ResponseEntity<Void> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
-        employeeService.adicionaFuncionario(employeeDTO);
+        employeeBusiness.adicionaFuncionario(employeeDTO);
         return ResponseEntity.ok().build();
     }
 
     @Override
-    @GetMapping("/{codigoFuncionario}")
-    public ResponseEntity<EmployeeDTO> buscaFuncionario(@PathVariable Long codigoFuncionario) {
+    @GetMapping(path ="/{codigoFuncionario}")
+    public ResponseEntity<EmployeeDTO> findEmployee(@PathVariable Long codigoFuncionario) {
 
-        ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeService.buscaFuncionario(codigoFuncionario)
+        ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeBusiness.findEmployee(codigoFuncionario)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
 
@@ -64,9 +64,9 @@ public class EmployeeRest implements EmployeeRestEndpoint {
             content = @Content)
     })
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmployeeDTO>> buscaFuncionariosList() {
+    public ResponseEntity<List<EmployeeDTO>> findAllEmployees() {
 
-        ResponseEntity<List<EmployeeDTO>> response = ResponseEntity.ok(employeeService.buscaFuncionariosList());
+        ResponseEntity<List<EmployeeDTO>> response = ResponseEntity.ok(employeeBusiness.findAllEmployees());
         if (Objects.isNull(response.getBody())) {
             response = ResponseEntity.noContent().build();
         }
@@ -74,10 +74,19 @@ public class EmployeeRest implements EmployeeRestEndpoint {
     }
 
     @Override
-    @PutMapping("/{codigoFuncionario}")
-    public ResponseEntity<Void> atualizaFuncionario(Long codigoFuncionario, EmployeeDTO employeeDTO) {
+    @PutMapping(path ="/{codigoFuncionario}")
+    public ResponseEntity<Void> updateEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
 
-        employeeService.atualizaFuncionario(codigoFuncionario, employeeDTO);
+        employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
+
+        return null;
+    }
+
+    @Override
+    @PatchMapping(path ="/{codigoFuncionario}")
+    public ResponseEntity<Void> updatePartiallyEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
+
+        employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
 
         return null;
     }

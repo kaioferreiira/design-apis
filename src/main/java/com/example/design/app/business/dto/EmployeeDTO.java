@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 public class EmployeeDTO {
 
     @NotBlank
-    private String nome;
+    private String name;
     private String email;
-    private String celular;
-    private Integer idade;
+    private String cellphone;
+    private Integer age;
+    private String cpf;
 
 }
