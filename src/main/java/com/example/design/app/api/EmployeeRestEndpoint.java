@@ -16,4 +16,6 @@ public interface EmployeeRestEndpoint {
 
     ResponseEntity<Void> updatePartiallyEmployee(Long employeeId, EmployeeDTO employeeDTO);
 
+    ResponseEntity<Void> deleteEmployee(Long employeeId);
+
 }

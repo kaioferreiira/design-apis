@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +36,9 @@ public class EmployeeRest implements EmployeeRestEndpoint {
 
     @Override
     @PostMapping(path ="/")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "")
+    })
     public ResponseEntity<Void> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
         employeeBusiness.adicionaFuncionario(employeeDTO);
@@ -43,10 +46,10 @@ public class EmployeeRest implements EmployeeRestEndpoint {
     }
 
     @Override
-    @GetMapping(path ="/{codigoFuncionario}")
-    public ResponseEntity<EmployeeDTO> findEmployee(@PathVariable Long codigoFuncionario) {
+    @GetMapping(path ="/{employeeId}")
+    public ResponseEntity<EmployeeDTO> findEmployee(@PathVariable Long employeeId) {
 
-        ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeBusiness.findEmployee(codigoFuncionario)
+        ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeBusiness.findEmployee(employeeId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
 
@@ -74,7 +77,7 @@ public class EmployeeRest implements EmployeeRestEndpoint {
     }
 
     @Override
-    @PutMapping(path ="/{codigoFuncionario}")
+    @PutMapping(path ="/{employeeId}")
     public ResponseEntity<Void> updateEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
 
         employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
@@ -83,14 +86,25 @@ public class EmployeeRest implements EmployeeRestEndpoint {
     }
 
     @Override
-    @PatchMapping(path ="/{codigoFuncionario}")
-    public ResponseEntity<Void> updatePartiallyEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
+    @PatchMapping(path ="/{employeeId}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "")
+    })
+    public ResponseEntity<Void> updatePartiallyEmployee(Long employeeId, EmployeeDTO employeeDTO) {
 
-        employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
+        employeeBusiness.updateEmployee(employeeId, employeeDTO);
 
         return null;
     }
 
+    @Override
+    @DeleteMapping(path = "/{employeeId}")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "")
+    })
+    public ResponseEntity<Void> deleteEmployee(Long employeeId) {
+        return null;
+    }
 
 
 }
