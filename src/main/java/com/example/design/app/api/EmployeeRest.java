@@ -26,85 +26,87 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = EmployeeRest.BASE_PATH)
 public class EmployeeRest implements EmployeeRestEndpoint {
 
-    public static final String BASE_PATH = "/employees";
+  public static final String BASE_PATH = "/employees";
 
-    private EmployeeBusiness employeeBusiness;
+  private EmployeeBusiness employeeBusiness;
 
-    public EmployeeRest(EmployeeBusiness employeeBusiness) {
-        this.employeeBusiness = employeeBusiness;
+  public EmployeeRest(EmployeeBusiness employeeBusiness) {
+    this.employeeBusiness = employeeBusiness;
+  }
+
+  @Override
+  @PostMapping(path = "/")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "")
+  })
+  public ResponseEntity<Void> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+
+    employeeBusiness.adicionaFuncionario(employeeDTO);
+    return ResponseEntity.ok().build();
+  }
+
+  @Override
+  @GetMapping(path = "/{employeeId}")
+  public ResponseEntity<EmployeeDTO> findEmployee(@PathVariable Long employeeId) {
+
+    ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeBusiness
+        .findEmployee(employeeId)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.noContent().build());
+
+    return funcionarioDTOResponseEntity;
+  }
+
+  @Override
+  @Operation(summary = "This is to fetch All the Books stored in Db")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200",
+          description = "Fetched All the Books form Db",
+          content = {@Content(mediaType = "application/json")}),
+      @ApiResponse(responseCode = "404",
+          description = "NOt Available",
+          content = @Content)
+  })
+  @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<EmployeeDTO>> findAllEmployees() {
+
+    ResponseEntity<List<EmployeeDTO>> response = ResponseEntity
+        .ok(employeeBusiness.findAllEmployees());
+    if (Objects.isNull(response.getBody())) {
+      response = ResponseEntity.noContent().build();
     }
+    return response;
+  }
 
-    @Override
-    @PostMapping(path ="/")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "")
-    })
-    public ResponseEntity<Void> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
+  @Override
+  @PutMapping(path = "/{employeeId}")
+  public ResponseEntity<Void> updateEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
 
-        employeeBusiness.adicionaFuncionario(employeeDTO);
-        return ResponseEntity.ok().build();
-    }
+    employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
 
-    @Override
-    @GetMapping(path ="/{employeeId}")
-    public ResponseEntity<EmployeeDTO> findEmployee(@PathVariable Long employeeId) {
+    return null;
+  }
 
-        ResponseEntity<EmployeeDTO> funcionarioDTOResponseEntity = employeeBusiness.findEmployee(employeeId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.noContent().build());
+  @Override
+  @PatchMapping(path = "/{employeeId}")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "")
+  })
+  public ResponseEntity<Void> updatePartiallyEmployee(Long employeeId, EmployeeDTO employeeDTO) {
 
-        return funcionarioDTOResponseEntity;
-    }
+    employeeBusiness.updateEmployee(employeeId, employeeDTO);
 
-    @Override
-    @Operation(summary = "This is to fetch All the Books stored in Db")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200",
-            description = "Fetched All the Books form Db",
-            content = {@Content(mediaType = "application/json")}),
-        @ApiResponse(responseCode = "404",
-            description = "NOt Available",
-            content = @Content)
-    })
-    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EmployeeDTO>> findAllEmployees() {
+    return null;
+  }
 
-        ResponseEntity<List<EmployeeDTO>> response = ResponseEntity.ok(employeeBusiness.findAllEmployees());
-        if (Objects.isNull(response.getBody())) {
-            response = ResponseEntity.noContent().build();
-        }
-        return response;
-    }
-
-    @Override
-    @PutMapping(path ="/{employeeId}")
-    public ResponseEntity<Void> updateEmployee(Long codigoFuncionario, EmployeeDTO employeeDTO) {
-
-        employeeBusiness.updateEmployee(codigoFuncionario, employeeDTO);
-
-        return null;
-    }
-
-    @Override
-    @PatchMapping(path ="/{employeeId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "")
-    })
-    public ResponseEntity<Void> updatePartiallyEmployee(Long employeeId, EmployeeDTO employeeDTO) {
-
-        employeeBusiness.updateEmployee(employeeId, employeeDTO);
-
-        return null;
-    }
-
-    @Override
-    @DeleteMapping(path = "/{employeeId}")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "")
-    })
-    public ResponseEntity<Void> deleteEmployee(Long employeeId) {
-        return null;
-    }
+  @Override
+  @DeleteMapping(path = "/{employeeId}")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "")
+  })
+  public ResponseEntity<Void> deleteEmployee(Long employeeId) {
+    return null;
+  }
 
 
 }
