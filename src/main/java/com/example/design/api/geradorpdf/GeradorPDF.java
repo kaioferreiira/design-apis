@@ -8,8 +8,10 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 
 public class GeradorPDF {
 
@@ -30,6 +32,8 @@ public class GeradorPDF {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -120,14 +124,16 @@ public class GeradorPDF {
         document.close();
     }
 
-    private static void criaPDFBasico() throws FileNotFoundException {
+    private static void criaPDFBasico() throws IOException {
         //Criando documento basico
 //        Document document = new Document( PageSize.A4, 10,10,10,10 ); // tamanho da página A4 e 10 de margem
         Document document = new Document();
         //gera instacia, neste caso vai criar um pdf na raiz
         // Usando  o file outputstream
         //ideia é criar o objeto e enviar para uma saida externa. outputstream
-        PdfWriter.getInstance(document, new FileOutputStream("openpdf.pdf"));
+        //criar uma pasta temporaria para armazenar o pdf e gerar o base64
+        FileOutputStream fileOutputStream = new FileOutputStream("openpdf.pdf");
+        PdfWriter.getInstance(document, fileOutputStream);
         document.open();
 
         Chunk c = new Chunk("Uma String" );
@@ -135,7 +141,25 @@ public class GeradorPDF {
         c.setFont(fontChunk);
         document.add(c);
         document.close();
-    }
+
+        //encode
+        byte[] inFileBytes = Files.readAllBytes(Paths.get("openpdf.pdf"));
+//        byte[] encoded = java.util.Base64.getEncoder().encode(inFileBytes);
+        String encodeToString = Base64.getEncoder().encodeToString(inFileBytes);
+
+
+        //decode
+        byte[] decoded = java.util.Base64.getDecoder().decode(encodeToString);
+        FileOutputStream fos = new FileOutputStream("testeAquivoEncode.pdf");
+        fos.write(decoded);
+        fos.flush();
+        fos.close();
+
+
+        }
+
+
+
 
     private static void criaPDFComParagrafo() throws FileNotFoundException {
         Document documentComParagrafo = new Document();
